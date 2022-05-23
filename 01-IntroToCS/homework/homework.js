@@ -13,12 +13,18 @@ function BinarioADecimal(num) {
 
 function DecimalABinario(num) {
   // tu codigo aca
+  let restos = "";
   while (num > 0) {
-      
+    restos = restos + String(num % 2);
+    num = Math.floor(num / 2);
   }
-}
 
-console.log(DecimalABinario(11));
+  let restosInvertido = "";
+  for (let i = restos.length - 1; i >= 0; i--) {
+    restosInvertido = restosInvertido + restos[i];
+  }
+  return restosInvertido;
+}
 
 module.exports = {
   BinarioADecimal,

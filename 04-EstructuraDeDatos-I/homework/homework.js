@@ -14,10 +14,19 @@ Secuencia:  0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...
 Como ejercicio adicional y completamente opcional, al terminar de resolver este problema pueden intentar definir funciones que logren los mismos resultados pero de manera iterativa.
 */
 
-function nFactorial(n) {
+function nFactorial(n = 0) {
+  if (n < 2) {
+    return n;
+  }
+  return n * (nFactorial(n - 1));
 }
 
-function nFibonacci(n) {
+function nFibonacci(n = 0) {
+  if (n <= 1) {
+    return n;
+  }
+  return nFibonacci(n - 1) + nFibonacci(n - 2);
+
 }
 
 /*
@@ -30,8 +39,22 @@ Pueden utilizar class o función constructora.
 */
 
 function Queue() {
+  this.arr = [];
+}
+
+Queue.prototype.enqueue = function (value) {
+  this.arr.push(value);
+}
+
+Queue.prototype.dequeue = function () {
+  return this.arr.shift();
 
 }
+
+Queue.prototype.size = function () {
+  return this.arr.length;
+}
+
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------

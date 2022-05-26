@@ -46,7 +46,7 @@ squareCache(5)    // no volverá a invocar a square, simplemente buscará en la 
 */
 function cacheFunction(cb) {
 
-  var cache = {}; // creo un objeto llamado cache para guardar las veces que arg ya ha sido invocado.
+  let cache = {}; // creo un objeto llamado cache para guardar las veces que arg ya ha sido invocado.
   return function (arg) {
     if (cache.hasOwnProperty(arg)) { // verifico si ya existe el arg en cache, si existe, le retorno el calculo que ya hizo cb previamente
       return cache[arg];

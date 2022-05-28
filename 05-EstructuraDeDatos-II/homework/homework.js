@@ -30,7 +30,7 @@ class LinkedList { // creo la clase LinkedList con su constructor
       currentNode = currentNode.next;
     }
     currentNode.next = node; // en el último .next colocamos el nuevo nodo.
-    this.length++; 
+    this.length++;
   }
 
   remove() { // Método para remover el último Nodo de la lista.
@@ -103,8 +103,39 @@ La clase debe tener los siguientes métodos:
 Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero puedo chequear, con hasKey, si ya hay algo en la tabla con el nombre 'instructora'; luego, invocando set('instructora', 'Ani'), se almacenará el par clave-valor en un bucket específico (determinado al hashear la clave)
 */
 
-function HashTable() {
+class HashTable {
+  constructor() {
+    this.numBuckets = 35;
+    this.arr = new Array(this.numBuckets);
+  }
 
+  hash(data) { // Método para hashear un dato.
+    if (typeof data != 'string') { // si no es un string, retornamos un error.
+      throw new TypeError('Keys must be strings');
+    }
+    let counter = 0; // almacenamos la suma de todos los charCode en una variable
+    for (let i = 0; i < data.length; i++) {
+      counter = counter + data.charCodeAt(i);
+    }
+    return counter % this.numBuckets; // retornamos el resto de la suma de todos los charCode divido el número de buckets
+  }
+
+  set(key, value) { // Método para agregar un nuevo dato.
+    let bucket = this.hash(key); // conseguimos el bucket en dónde almacenar el dato
+    if (!this.arr[bucket]) this.arr[bucket] = {}; // si el bucket estaba vacio, entonces lo inicializamos como un objeto vacio.
+    this.arr[bucket][key] = value; // agregamos el nuevo valor con el key correspondiente.
+  }
+
+  get(key) { // Método para conseguir el valor mediante un key
+    let bucket = this.hash(key);
+    return this.arr[bucket][key];
+  }
+
+  hasKey(key) { // Método para saber si un key tiene un valor
+    let bucket = this.hash(key);
+    if (this.arr[bucket][key]) return true;
+    return false;
+  }
 }
 
 // No modifiquen nada debajo de esta linea

@@ -46,9 +46,8 @@ Queue.prototype.enqueue = function (value) {
   this.arr.push(value);
 }
 
-Queue.prototype.dequeue = function () {
+Queue.prototype.dequeue = function() {
   return this.arr.shift();
-
 }
 
 Queue.prototype.size = function () {

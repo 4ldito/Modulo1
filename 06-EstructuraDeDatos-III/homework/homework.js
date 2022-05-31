@@ -17,7 +17,8 @@ class BinarySearchTree {
     this.left = null;
     this.right = null;
   }
-  size() {
+
+  /*size() {
     let counter = 1;
     if (this.left) {
       counter = counter + this.left.size();
@@ -26,7 +27,16 @@ class BinarySearchTree {
       counter = counter + this.right.size();
     }
     return counter;
-  }
+  } */
+
+  
+  size() {
+    if (!this.left && !this.right) return 1;
+    if (!this.left && this.right) return 1 + this.right.size();
+    if (this.left && !this.right) return 1 + this.left.size();
+    if (this.left && this.right) return 1 + this.right.size() + this.left.size();
+  } 
+
   insert(value) {
     if (value >= this.value) {
       if (!this.right) {
@@ -50,10 +60,9 @@ class BinarySearchTree {
     } else {
       if (this.left) exists = this.left.contains(value);
     }
-
     return exists;
-
   }
+
   depthFirstForEach(cb, order = "in-order") {
     let arr;
     switch (order) {
@@ -105,7 +114,6 @@ class BinarySearchTree {
     arr.push(root.value);
     return arr;
   }
-
   preOrder(root, arr) {
     arr.push(root.value)
     if (root.left) {
@@ -127,13 +135,11 @@ class BinarySearchTree {
     }
     return arr;
   }
-
   breadthFirstForEach(cb, arr = []) {
     if (this.left) arr.push(this.left);
     if (this.right) arr.push(this.right);
     cb(this.value);
-
-    if(arr.length > 0) {
+    if (arr.length > 0) {
       arr.shift().breadthFirstForEach(cb, arr);
     }
 

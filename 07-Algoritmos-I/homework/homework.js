@@ -24,17 +24,9 @@ function bubbleSort(array) {
   // el array recibido como parámetro
   // Devolver el array ordenado resultante
   // Tu código:
-  // [10, 5, 3, 2, 7, 9, 8, 1, 4, 6]
-  ////////////////
-  // [5, 1, 4, 2, 8]
-  /**
-   * // [1, 4, 5, 2, 8]
-   * 
-   */
+  /*
   for (let i = 0; i < array.length; i++) {
     for (let j = i + 1; j < array.length; j++) {
-      //      let debugI = array[i];
-      //    let debugJ = array[j];
       if (array[i] > array[j]) { // 
         let aux = array[j];  // 4
         array[j] = array[i]; // 5
@@ -42,24 +34,21 @@ function bubbleSort(array) {
       }
     }
   }
-  return array;
-
-  /*
-    var done = false;
-    while (!done) {
-      done = true;
-      for (var i = 1; i < array.length; i ++) {
-        if (array[i] < array[i + 1]) {
-          done = false;
-          var tmp = array[i - 1];
-          array[i + 1] = array[i];
-          array[i] = tmp;
-        }
+  return array; 
+  */
+  let inOrder = false;
+  while (!inOrder) {
+    inOrder = true;
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] > array[i + 1]) {
+        inOrder = false;
+        let aux = array[i + 1];
+        array[i + 1] = array[i];
+        array[i] = aux;
       }
     }
-  
-    return array;
-    */
+  }
+  return array;
 }
 
 function insertionSort(array) {
@@ -68,14 +57,14 @@ function insertionSort(array) {
   // Devolver el array ordenado resultante
   // Tu código:
   // [5, 1, 4, 2, 8]
-  for (let i = 0; i < array.length; i++) {
-    for (let j = i + 1; j < array.length; j++) {
-      if (array[j] < array[i]) {
-        let aux = array[j];
-        array[j] = array[i];
-        array[i] = aux;
-      }
+  for (let i = 1; i < array.length; i++) {
+    let j = i - 1
+    let aux = array[i]
+    while ((j >= 0) && (aux < array[j])) {
+      array[j+1] = array[j];
+      j--
     }
+    array[j+1] = aux;
   }
   return array;
 }
@@ -86,13 +75,12 @@ function selectionSort(array) {
   // el array recibido como parámetro utilizando dos arreglos
   // Devolver el array ordenado resultante
   // Tu código:
-
   // [5, 1, 4, 2, 8]
   // [1, 5, 4, 2, 8]
-
-  for (let i = 0; i < array.length; i++) {
+  for (let i = 0; i < array.length - 1; i++) {
     let min = array[i]; // 5
     let pos = -1;
+
     for (let j = i + 1; j < array.length; j++) {
       if (min > array[j]) { // 5 es mayor q 1? si. - 1 es mayor q 4? no. - 1 es mayor q 2? no. 1 es mayor q 8? no. - TERMINA i=0
         min = array[j] // min = 1

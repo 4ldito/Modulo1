@@ -18,17 +18,6 @@ class BinarySearchTree {
     this.right = null;
   }
 
-  /*size() {
-    let counter = 1;
-    if (this.left) {
-      counter = counter + this.left.size();
-    }
-    if (this.right) {
-      counter = counter + this.right.size();
-    }
-    return counter;
-  } */
-
   
   size() {
     if (!this.left && !this.right) return 1;

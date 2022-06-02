@@ -14,9 +14,17 @@ const {
 // Pista: utilizar el método Array.isArray() para determinar si algun elemento de array es un array anidado
 // [Para más información del método: https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/isArray]
 
-var countArray = function(array) {
+var countArray = function (array) {
     // Tu código aca:
-    
+    let count = 0;
+    for (let i = 0; i < array.length; i++) {
+        if (Array.isArray(array[i])) {
+            count += countArray(array[i]);
+        } else {
+            count += array[i]
+        }
+    }
+    return count;
 }
 
 
@@ -32,15 +40,34 @@ var countArray = function(array) {
 //   },
 //   b: 2,
 //   c: [1, {a: 1}, 'Franco']
-// }
+// }    
 // countProps(obj)--> Deberia devolver 10 ya que el objeto inicial tiene 3 propiedades, pero a su vez
 // dentro de a tenemos 3 propiedades mas, luego a3 tiene otras 3 y por ultimo c tiene una extra.
 // Propiedades: a, a1, a2, a3, f, a, c, o, b, c --> 10 en total
 
-var countProps = function(obj) {
+var countProps = function (obj) {
     // Tu código aca:
-
+    let count = 0;
+    for (const key in obj) {
+        count++;
+        if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
+            count = count + countProps(obj[key]);
+        }
+    }
+    return count;
 }
+/* de emiliano 
+var countProps = function(obj) {
+    let totalProps = 0;
+    if (!obj) return 0;
+    if (typeof obj === "object" && !Array.isArray(obj)) {
+        for (const i in obj) {
+            totalProps += 1 + countProps(obj[i]);
+        }
+    }
+
+    return totalProps;
+} */
 
 
 // Implementar el método changeNotNumbers dentro del prototype de LinkedList que deberá cambiar
@@ -49,11 +76,20 @@ var countProps = function(obj) {
 // Ejemplo 1:
 //    Suponiendo que la lista actual es: Head --> [1] --> ['2'] --> [false] --> ['Franco']
 //    lista.changeNotNumbers();
-//    Ahora la lista quedaría: Head --> [1] --> ['2'] --> [false] --> ['Kirikocho] y la función debería haber devuelto el valor 1
+//    Ahora la lista quedaría: Head --> [1] --> ['2'] --> [false] --> ['Kiricocho] y la función debería haber devuelto el valor 1
 
-LinkedList.prototype.changeNotNumbers = function(){
+LinkedList.prototype.changeNotNumbers = function () {
     // Tu código aca:
-
+    let current = this.head;
+    let count = 0;
+    while (current) {
+        if (isNaN(Number(current.value))) {
+            current.value = "Kiricocho";
+            count++;
+        }
+        current = current.next;
+    }
+    return count;
 }
 
 
@@ -65,9 +101,16 @@ LinkedList.prototype.changeNotNumbers = function(){
 // mergeQueues(queueOne, queueTwo) --> [7,2,3,4,5,6]
 // IMPORTANTE: NO son arreglos sino que son Queues.
 
-var mergeQueues = function(queueOne, queueTwo) {
+var mergeQueues = function (queueOne, queueTwo) {
     // Tu código aca:
+    let newQueue = new Queue();
 
+    while (queueOne.size()|| queueTwo.size()) {
+        if (queueOne.size() > 0) newQueue.enqueue(queueOne.dequeue());
+        if (queueTwo.size() > 0) newQueue.enqueue(queueTwo.dequeue());
+    }
+
+    return newQueue;
 }
 
 
@@ -75,21 +118,28 @@ var mergeQueues = function(queueOne, queueTwo) {
 // las tablas de multiplicación de distintos numeros
 // Ejemplo: 
 // - var multByFour = closureMult(4);
-// - multByFour(2) --> 8 (2 * 4)
-// - multByFour(5) --> 20
+// - multByFour(2) --> 8 = (2 * 4)
+// - multByFour(5) --> 20 = (5 * 4)
 // - var multBySix = closureMult(6);
-// - multBySix(4) --> 24
+// - multBySix(4) --> 24 = (6 * 4)
 
-var closureMult = function(multiplier) {
+var closureMult = function (multiplier) {
     // Tu código aca:
-
+    //let m = multiplier;
+    return function (num) {
+        return num * multiplier;
+    }
+    
 }
 
 // Implementar el método sum dentro del prototype de BinarySearchTree
 // que debe retornar la suma total de los valores dentro de cada nodo del arbol
-BinarySearchTree.prototype.sum = function() {
+BinarySearchTree.prototype.sum = function () {
     // Tu código aca:
-
+    let totalValue = this.value;
+    if (this.left) totalValue = totalValue + this.left.sum();
+    if (this.right) totalValue = totalValue + this.right.sum();
+    return totalValue;
 }
 
 module.exports = {
